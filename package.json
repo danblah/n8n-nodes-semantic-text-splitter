@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-semantic-text-splitter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "n8n community sub-node for Semantic Double-Pass Merging text splitting with embeddings-based chunking",
   "keywords": [
     "n8n-community-node-package",
@@ -59,4 +59,4 @@
   "peerDependencies": {
     "n8n-workflow": "^1.25.1"
   }
-} 
+}
