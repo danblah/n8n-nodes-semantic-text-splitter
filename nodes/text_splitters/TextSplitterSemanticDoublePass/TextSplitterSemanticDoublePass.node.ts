@@ -9,8 +9,6 @@ import {
 import { Document } from '@langchain/core/documents';
 import { Embeddings } from '@langchain/core/embeddings';
 import { TextSplitter } from '@langchain/textsplitters';
-import { getConnectionHintNoticeField } from '../../utils/sharedFields';
-import { metadataFilterField } from '../../utils/metadataFiltersField';
 
 // Custom implementation of Semantic Double-Pass Merging splitter
 class SemanticDoublePassMergingSplitter extends TextSplitter {
@@ -350,15 +348,6 @@ export class TextSplitterSemanticDoublePass implements INodeType {
 				type: NodeConnectionType.AiEmbedding,
 				required: true,
 			},
-			{
-				displayName: 'Document',
-				maxConnections: 1,
-				type: NodeConnectionType.AiDocument,
-			},
-			{
-				displayName: 'Text',
-				type: NodeConnectionType.Main,
-			},
 		],
 		outputs: [
 			{
@@ -368,7 +357,6 @@ export class TextSplitterSemanticDoublePass implements INodeType {
 			},
 		],
 		properties: [
-			getConnectionHintNoticeField([NodeConnectionType.AiDocument]),
 			{
 				displayName: 'Options',
 				name: 'options',
@@ -468,7 +456,6 @@ export class TextSplitterSemanticDoublePass implements INodeType {
 						default: '(?<=[.?!])\\s+',
 						description: 'Regular expression to split text into sentences',
 					},
-					metadataFilterField,
 				],
 			},
 		],
@@ -489,7 +476,6 @@ export class TextSplitterSemanticDoublePass implements INodeType {
 			minChunkSize?: number;
 			maxChunkSize?: number;
 			sentenceSplitRegex?: string;
-			metadataFilter?: string;
 		};
 
 		const splitter = new SemanticDoublePassMergingSplitter(embeddings, {
@@ -503,7 +489,7 @@ export class TextSplitterSemanticDoublePass implements INodeType {
 			sentenceSplitRegex: options.sentenceSplitRegex,
 		});
 
-		// Return the splitter directly as SupplyData
+		// Return the splitter instance directly
 		return {
 			response: splitter,
 		};
